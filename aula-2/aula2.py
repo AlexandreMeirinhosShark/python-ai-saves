@@ -1,0 +1,18 @@
+import pyautogui as gui
+from time import sleep
+gui.press("win")
+sleep(1)
+gui.write("paint")
+sleep(1)
+gui.press("enter")
+sleep(1)
+gui.moveTo(750, 513, duration=1)
+gui.dragRel(200, 0, duration=1)
+gui.dragRel(0, 200, duration=0.5)
+gui.dragRel(-200, 0, duration=0.5)
+gui.dragRel(0, -200, duration=0.5)
+gui.moveTo(400, 400, duration=0.5)
+gui.click()
+sleep(1)
+gui.hotkey("alt", "f4", interval=0.5)
+gui.press("n")
