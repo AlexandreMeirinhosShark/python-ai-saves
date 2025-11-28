@@ -1,14 +1,19 @@
 import cv2
-import pytesseract as tess
+import pytesseract
 import tkinter as tk
 from tkinter import filedialog
 
-def itt():
-    img = cv2.imread(path)
-    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    gray = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)[1]
+path = None # global path variable to store selected file path
 
-    # tess.image_to_string(gray)
+def itt():
+    global path
+    path = pick_file()
+    if not path:
+        return
+    img = cv2.imread(path)
+
+    trs = pytesseract.image_to_string(img)
+    lbl.config(text=trs)
 
 def pick_file():
     filepath = filedialog.askopenfilename(
@@ -27,9 +32,11 @@ root.title("Imagem para Texto")
 root.wm_resizable(False, False)
 root.config(bg="light grey")
 
-titl = tk.Label(root, font="Arial 18 bold", text="»Image to Text«")
+titl = tk.Label(root, font="Arial 18 bold", text="»Image to Text«", bg="light grey")
 titl.pack(pady=10)
-lbl = tk.Label(root, width=20, height=10, font="Arial 18", relief="sunken", bg="white", text="Nothing.")
-lbl.pack(pady=90)
+lbl = tk.Label(root, width=50, height=20, font="Arial 10", relief="sunken", bg="white", text="Pick an image to process it into text!\n\n:D", wraplength=400, anchor="nw", justify="left")
+lbl.pack(pady=20)
+btn = tk.Button(root, font="Arial 12 bold", text="Search Image", bg="navy", fg="white", command=itt)
+btn.place(x=200, y=450)
 
 root.mainloop()
